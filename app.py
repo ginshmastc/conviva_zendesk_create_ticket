@@ -3,7 +3,11 @@ import json
 import requests
 from bottle import route, template, run, static_file, request, response
 
-
+if os.environ.get('APP_LOCATION') == 'heroku':
+    run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+else:
+    run(host='localhost', port=8080, debug=True)
+    
 @route('/create_ticket', method=['GET', 'POST'])
 def handle_form():
     if 'verified_email' in request.cookies:
@@ -44,4 +48,3 @@ def handle_form():
         print(status)
     return template('ticket_form', feedback=status, no_email=ask_email)
 
-run(host='localhost', port=8080, debug=True)
