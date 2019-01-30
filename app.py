@@ -45,3 +45,4 @@ def handle_form():
     return template('ticket_form', feedback=status, no_email=ask_email)
 
 run(host="0.0.0.0", port=5000)
+handle_form();
