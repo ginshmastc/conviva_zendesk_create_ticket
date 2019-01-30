@@ -1,5 +1,5 @@
 import json
-
+import os
 import requests
 from bottle import route, template, run, static_file, request, response
 
@@ -45,5 +45,7 @@ def handle_form():
         print(status)
     return template('ticket_form', feedback=status, no_email=ask_email)
 
-
-run(host="199.127.192.10", port=5000)
+if os.environ.get('APP_LOCATION') == 'heroku':
+    run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+else:
+    run(host='localhost', port=8080, debug=True)
