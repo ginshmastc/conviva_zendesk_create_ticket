@@ -44,4 +44,4 @@ def handle_form():
         print(status)
     return template('ticket_form', feedback=status, no_email=ask_email)
 
-run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+run(host="0.0.0.0", port=5000)
