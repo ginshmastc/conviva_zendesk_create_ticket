@@ -4,7 +4,6 @@ import requests
 from bottle import route, template, run, static_file, request, response
 
 
-run(host="0.0.0.0", port=5000)
 
 @route('/create_ticket', method=['GET', 'POST'])
 def handle_form():
@@ -46,3 +45,5 @@ def handle_form():
         print(status)
     return template('ticket_form', feedback=status, no_email=ask_email)
 
+
+run(host="0.0.0.0", port=5000)
