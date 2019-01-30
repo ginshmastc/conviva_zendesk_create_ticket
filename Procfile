@@ -1,1 +1,1 @@
-web: handle_form
+web: python app.py
