@@ -44,8 +44,9 @@ def handle_form():
                 ask_email = False
         print(status)
     return template('ticket_form', feedback=status, no_email=ask_email)
-print('APP_LOCATION ')
+port = port = os.environ.get('PORT', 5000) || 8080
+print('port ' + str(port))
 #if os.environ.get('APP_LOCATION') == 'heroku':
-run(host="0.0.0.0", port=5000)
+run(host="0.0.0.0", port=port)
 #else:
 #    run(host='localhost', port=8080, debug=True)
