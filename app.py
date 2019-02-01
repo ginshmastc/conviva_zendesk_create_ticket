@@ -47,6 +47,6 @@ def handle_form():
 port = os.environ.get('PORT', 5000)
 print('port ' + str(port))
 #if os.environ.get('APP_LOCATION') == 'heroku':
-run(host="0.0.0.0", port=port)
+run(host="0.0.0.0", port=5000)
 #else:
 #    run(host='localhost', port=8080, debug=True)
