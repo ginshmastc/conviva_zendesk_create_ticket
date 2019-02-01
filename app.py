@@ -5,7 +5,7 @@ from bottle import route, template, run, static_file, request, response
 
 
 
-@route('/', method=['GET', 'POST'])
+@route('/create_ticket', method=['GET', 'POST'])
 def handle_form():
     if 'verified_email' in request.cookies:
         ask_email = False
