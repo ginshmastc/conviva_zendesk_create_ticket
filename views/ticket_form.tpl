@@ -73,9 +73,10 @@
   </td>
   <td>
     <select name="priority" id="id_priority">
-    <option value="P0">P0 - Critical</option>
-    <option value="P1">P1 - Urgent</option>
-    <option value="P2" selected="selected">P2 - Standard</option>
+    <option value="urgent">P0 - Critical</option>
+    <option value="high">P1 - Urgent</option>
+    <option value="normal" selected="selected">P2 - Standard</option>
+	<option value="low">P3 - Low</option>
     </select>
   </td>
 </tr><tr>
@@ -85,23 +86,24 @@
   <td>
     <select name="00N400000025F5S" id="id_00N400000025F5S">
     <option value="" selected="selected">-None-</option>
-    <option value="Ad Insights">Ad Insights</option>
-    <option value="Alerts">Alerts</option>
-    <option value="Community">Community</option>
-    <option value="Device Validation">Device Validation</option>
-    <option value="Insights API">Insights API</option>
-    <option value="Live Events">Live Events</option>
-    <option value="Personal Data">Personal Data</option>
-    <option value="Player">Player</option>
-    <option value="Portal">Portal</option>
-    <option value="Precision">Precision</option>
-    <option value="Pulse">Pulse</option>
-    <option value="Reports">Reports</option>
-    <option value="SSD">SSD</option>
-    <option value="Touchstone">Touchstone</option>
-    <option value="VAI Alerts">VAI Alerts</option>
-    <option value="Viewer API">Viewer API</option>
-    <option value="Viewer Module">Viewer Module</option>
+    <option value="ad_insights">Ad Insights</option>
+    <option value="alerts">Alerts</option>
+    <option value="community">Community</option>
+    <option value="device_validation">Device Validation</option>
+    <option value="insights_api">Insights API</option>
+    <option value="live_events">Live Events</option>
+	<option value="pendo">Pendo</option>
+    <option value="personal_data">Personal Data</option>
+    <option value="player">Player</option>
+    <option value="portal">Portal</option>
+    <option value="precision">Precision</option>
+    <option value="pulse">Pulse</option>
+    <option value="reports">Reports</option>
+    <option value="ssd">SSD</option>
+    <option value="touchstone">Touchstone</option>
+    <option value="vai_alerts">VAI Alerts</option>
+    <option value="viewer_api">Viewer API</option>
+    <option value="viewer_module">Viewer Module</option>
     </select>
   </td>
 </tr><tr>
