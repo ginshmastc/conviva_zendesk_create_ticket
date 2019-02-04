@@ -37,13 +37,16 @@ def handle_form():
             if r.status_code == 401 or 422:
                 status = 'Could not authenticate you. Check your email address or register.'
                 ask_email = True
+				return template('auth_form', feedback=status, no_email=ask_email)
             else:
                 status = 'Problem with the request. Status ' + str(r.status_code)
+				return template('failed_form', feedback=status, no_email=ask_email)
         else:
             status = 'Ticket was created. Look for an email notification.'
             if 'verified_email' not in request.cookies:
                 response.set_cookie('verified_email', email, max_age=364*24*3600)
                 ask_email = False
+				return template('success_form', feedback=status, no_email=ask_email)
         print(status)
     return template('ticket_form', feedback=status, no_email=ask_email)
 
