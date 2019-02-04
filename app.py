@@ -17,12 +17,14 @@ def handle_form():
         # Get the form data
         subject = request.forms.get('subject')
         description = request.forms.get('description')
+        priority = request.forms.get('priority')
+        feature = request.forms.get('00N400000025F5S')
         if 'verified_email' in request.cookies:
             email = request.get_cookie('verified_email')
         else:
             email = request.forms.get('email')
         # Package the data for the API
-        data = {'request': {'subject': subject, 'comment': {'body': description}}}
+        data = {'request': {'subject': subject, 'comment': {'body': description}, 'priority': priority, 'custom_fields':[{'id': 360011369671, 'value': feature}]}}
         ticket = json.dumps(data)
         print(ticket)
         # Make the API request
@@ -47,7 +49,7 @@ def handle_form():
 
 if os.environ.get('APP_LOCATION') == 'heroku':
     run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    print('heroku')
 else:
     run(host='localhost', port=8080, debug=True)
-
-
+    print('local')
