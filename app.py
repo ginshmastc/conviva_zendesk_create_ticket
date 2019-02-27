@@ -1,6 +1,7 @@
 import json
 import os
 import requests
+import base64
 from bottle import route, template, run, static_file, request, response
 
 
@@ -39,13 +40,11 @@ def handle_form():
             api_token = 'FOV7zAS4ZIGylDLyqr4LbA56VNXgB9FFIU5hXkXF'
             url = 'https://convivasupport.zendesk.com/api/v2/uploads.json?filename=' + attachmentname
             headers = {'content-type': 'application/binary', 'Accept': '*'}
-            file = os.getcwd() + '/' + attachmentname
-            file = '../' + attachmentname
-            print(file)
-            filereader = open(file, 'rb')
-            q = requests.post(url, data=filereader.read(), auth=(user, api_token), headers=headers, params=ticket)
+
+            #decode data to send through post
+            decodeddata = base64.decodebytes(bytes(attachmentdata, 'utf-8'))
+            q = requests.post(url, data=decodeddata, auth=(user, api_token), headers=headers)
             print(json.loads(q.content))
-            filereader.close()
             upload = json.loads(q.content)['upload']['token']
             print('upload')
             print(upload)
