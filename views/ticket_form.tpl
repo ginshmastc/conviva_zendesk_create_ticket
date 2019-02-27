@@ -46,7 +46,7 @@
 		  var filecontent = fileread.substring(fileheader.length+1);
 		  var filetype = fileheader.split(';')[0].substring(5);
 		  document.getElementById("hiddentype").value = filetype;
-		  document.getElementById("hiddendata").value = fileread;
+		  document.getElementById("hiddendata").value = filecontent;
 		  document.getElementById('hiddenname').value = document.getElementById('attachment').files[0].name;
     	  document.getElementById('hiddensize').value = document.getElementById('attachment').files[0].size;
 		  console.log(fileread);
