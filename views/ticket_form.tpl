@@ -33,7 +33,33 @@
   }
 </style>
 
-<form action="create_ticket" method="post">
+<script type="text/javascript">
+
+    window.addEventListener("load", function() {
+      document.getElementById("attachment").onchange = function(event) {
+        var reader = new FileReader();
+        reader.readAsDataURL(event.srcElement.files[0]);
+        var me = this;
+        reader.onload = function () {
+          var fileread = reader.result;
+		  var fileheader = fileread.split(',')[0];
+		  var filecontent = fileread.substring(fileheader.length+1);
+		  var filetype = fileheader.split(';')[0].substring(5);
+		  document.getElementById("hiddentype").value = filetype;
+		  document.getElementById("hiddendata").value = fileread;
+		  document.getElementById('hiddenname').value = document.getElementById('attachment').files[0].name;
+    	  document.getElementById('hiddensize').value = document.getElementById('attachment').files[0].size;
+		  console.log(fileread);
+        }
+    }});
+
+</script>
+
+<form action="create_ticket" method="POST" enctype='multipart/form-data'>
+<input type='hidden' name='hiddenname' id='hiddenname'>
+<input type='hidden' name='hiddensize' id='hiddensize'>
+<input type='hidden' name='hiddentype' id='hiddentype'>
+<input type='hidden' name='hiddendata' id='hiddendata'>
 <table id='table'>
 <tr>
   <td>
@@ -108,6 +134,13 @@
   </td>
 </tr><tr>
   <td>
+  
+  </td>
+  <td>
+    <input type="file" name="attachment" id="attachment" accept="*" onchange='onInput()'>
+  </td>
+</tr><tr>
+  <td>
   </td>
   <td>
     <input type="submit" value="Submit">
@@ -115,5 +148,3 @@
 </tr></table>
 </form>
 </div>
-
-<!--Save to server and test sending ajax from other server-->
