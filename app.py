@@ -40,7 +40,7 @@ def handle_form():
             url = 'https://convivasupport.zendesk.com/api/v2/uploads.json?filename=' + attachmentname
             headers = {'content-type': 'application/binary', 'Accept': '*'}
             file = os.getcwd() + '/' + attachmentname
-            file = attachmentname
+            file = '../' + attachmentname
             print(file)
             filereader = open(file, 'rb')
             q = requests.post(url, data=filereader.read(), auth=(user, api_token), headers=headers, params=ticket)
