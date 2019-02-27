@@ -19,15 +19,44 @@ def handle_form():
         description = request.forms.get('description')
         priority = request.forms.get('priority')
         feature = request.forms.get('00N400000025F5S')
+        attachment = request.forms.get('attachment')
+        attachmenttype = request.forms.get('hiddentype')
+        attachmentdata = request.forms.get('hiddendata')
+        attachmentname = request.forms.get('hiddenname')
+        attachmentsize = request.forms.get('hiddensize')
         if 'verified_email' in request.cookies:
             email = request.get_cookie('verified_email')
         else:
             email = request.forms.get('email')
         # Package the data for the API
-        data = {'request': {'subject': subject, 'comment': {'body': description}, 'priority': priority, 'custom_fields':[{'id': 360011369671, 'value': feature}]}}
+        upload = ''
+
+        if attachmentdata:
+            # Make the API request
+            data = {'attachment': {'content_type': attachmenttype, 'file_name': attachmentname, 'size': attachmentsize}}
+            ticket = json.dumps(data)
+            user = email + '/token'
+            api_token = 'FOV7zAS4ZIGylDLyqr4LbA56VNXgB9FFIU5hXkXF'
+            url = 'https://convivasupport.zendesk.com/api/v2/uploads.json?filename=' + attachmentname
+            headers = {'content-type': 'application/binary', 'Accept': '*'}
+            file = os.getcwd() + '/' + attachmentname
+            print(file)
+            filereader = open(file, 'rb')
+            q = requests.post(url, data=filereader.read(), auth=(user, api_token), headers=headers, params=ticket)
+            print(json.loads(q.content))
+            filereader.close()
+            upload = json.loads(q.content)['upload']['token']
+            print('upload')
+            print(upload)
+
+        # Make the API request
+        if not upload:
+          data = {'request': {'subject': subject, 'comment': {'body': description}, 'priority': priority, 'custom_fields':[{'id': 360011369671, 'value': feature}]}}
+        else:
+          data = {'request': {'subject': subject, 'comment': {'body': description, 'uploads': [upload]}, 'priority': priority, 'custom_fields':[{'id': 360011369671, 'value': feature}]}}
+
         ticket = json.dumps(data)
         print(ticket)
-        # Make the API request
         user = email + '/token'
         api_token = 'FOV7zAS4ZIGylDLyqr4LbA56VNXgB9FFIU5hXkXF'
         url = 'https://convivasupport.zendesk.com/api/v2/requests.json'
@@ -40,7 +69,7 @@ def handle_form():
                 return template('auth_form', feedback=status, no_email=ask_email)
             else:
                 status = 'Problem with the request. Status ' + str(r.status_code)
-                return template('failed_form', feedback=status, no_email=ask_email)
+                return template('failed_form', feedback=status)
         else:
             status = 'Ticket was created. Look for an email notification.'
             if 'verified_email' not in request.cookies:
