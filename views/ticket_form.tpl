@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<link rel="stylesheet" href="form_styles.css">
+<link rel="stylesheet" href="style.css">
 <div id="ticket_form">
 <style>
   body {
@@ -12,30 +12,90 @@
   }
   td {
     vertical-align: top;
-	padding: 5px 30px;
+	padding: 3px 10px;
   }
   input[type='text'], input[type='email'], textarea {
     width: 500px;
   }
   input[type='submit'] {
+    border: solid;
     border-radius: 2px;
-	border-color: gray;
+	border-color: rgb(130, 177, 12);
 	border-width: 1px;
-    background-color: #93D10E;
+    background-color: rgb(147, 201, 14);
 	font-size: 14px;
 	color: white;
 	width: 75px;
-	height: 30px;
+	line-height: 21x;
+	padding: 1.4px 14px;
+	height: 28px;
   }
   input, select, textarea {
     border-color: #3a8eaa;
 	border-width: thin;
+  }
+  table span {
+    font-size: 18.2px;
+    color: rgb(51, 51, 51);
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  }
+  table label {
+    font-size: 14px;
+    color: rgb(80, 80, 80);
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  }
+  table input, table select, table textarea {
+    color: rgb(80, 80, 80);
+    background-color: rgb(255, 255, 255);
+	border-color: rgb(127, 157, 185);
+	border-radius: 2px;
+	border-style: solid;
+	border-width: 1px;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+	box-sizing: border-box;
+	font-size: 14px;
+	height: 28px;
+	line-height: 21px;
+	padding 2.8px 5.6px;
+	transition: border linear .2s, box-shadow linear .2s;
+	vertical-align: middle;
+  }
+  
+  table input:focus, table select:focus, table textarea:focus {
+    outline: 0;
+    border-color: #75b9f0;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  }
+  
+  table input {
+    width: 546px;
+  }
+  
+  table select {
+    width: 210px;
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMiAxMiI+PHBhdGggZD0iTTAsNSA4LDUgNCw5eiIvPjwvc3ZnPg==);
+    background-position: 100% 50%;
+	background-position-x: 100%;
+	background-position-y: 50%;
+	background-repeat: no-repeat;
+	background-size: 12px 12px;
+	-moz-appearance: none;
+  }
+  input[type=file] {
+    width: 200px;
+	border: none;
+  }
+  table textarea {
+    height: 210px;
   }
 </style>
 
 <script type="text/javascript">
 
     window.addEventListener("load", function() {
+	  var c3 = document.getElementById('c3account').value;
+	  if(c3)
+	    document.getElementById('spantitle').innerHTML = 'Support Form for ' + c3;
       document.getElementById("attachment").onchange = function(event) {
         var reader = new FileReader();
         reader.readAsDataURL(event.srcElement.files[0]);
@@ -60,10 +120,11 @@
 <input type='hidden' name='hiddensize' id='hiddensize'>
 <input type='hidden' name='hiddentype' id='hiddentype'>
 <input type='hidden' name='hiddendata' id='hiddendata'>
+<input type='hidden' name='c3account' id='c3account'>
 <table id='table'>
 <tr>
   <td>
-    <span>Submit a ticket</span>
+    <span id='spantitle'>Support Form</span>
   </td>
   <td>
   </td>
@@ -74,11 +135,13 @@
   <td>
     <input type="email" name="email" class="field" required>
   </td>
+  <!--
 </tr><tr>
   <td></td>
   <td>
     <div class="register"><a href="https://convivasupport.zendesk.com/auth/v2/login/registration" target="_blank">Register</a> so our support team can email you to solve your problem.</div>
   </td>
+  -->
 </tr><tr>
   <td>
     <label for='id_subject'>Subject</label>
@@ -88,7 +151,7 @@
   </td>
 </tr><tr>
   <td>
-    <label for='id_description'>Description</label>
+    <label for='id_description'>Summary</label>
   </td>
   <td>
     <textarea id="id_description" rows="10" cols="40" name="description" required></textarea>
