@@ -44,6 +44,11 @@
     color: rgb(80, 80, 80);
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   }
+  table textarea {
+    font-size: 14px;
+    color: rgb(80, 80, 80);
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  }
   table input, table select, table textarea {
     color: rgb(80, 80, 80);
     background-color: rgb(255, 255, 255);
