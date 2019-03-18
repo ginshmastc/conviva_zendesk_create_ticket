@@ -22,6 +22,7 @@ def handle_form():
         attachmentdata = request.forms.get('hiddendata')
         attachmentname = request.forms.get('hiddenname')
         attachmentsize = request.forms.get('hiddensize')
+        c3account = request.forms.get('c3account')
         api_token = 'FOV7zAS4ZIGylDLyqr4LbA56VNXgB9FFIU5hXkXF'
         #if 'verified_email' in request.cookies:
             #email = request.get_cookie('verified_email')
@@ -59,9 +60,9 @@ def handle_form():
 
         # Make the API request
         if not upload:
-          data = {'request': {'subject': subject, 'comment': {'body': description}, 'priority': priority, 'custom_fields':[{'id': 360011369671, 'value': feature}]}}
+          data = {'request': {'subject': subject, 'comment': {'body': description}, 'priority': priority, 'custom_fields':[{'id': 360011369671, 'value': feature}, {'id': 360011165552, 'value': c3account}]}}
         else:
-          data = {'request': {'subject': subject, 'comment': {'body': description, 'uploads': [upload]}, 'priority': priority, 'custom_fields':[{'id': 360011369671, 'value': feature}]}}
+          data = {'request': {'subject': subject, 'comment': {'body': description, 'uploads': [upload]}, 'priority': priority, 'custom_fields':[{'id': 360011369671, 'value': feature}, {'id': 360011165552, 'value': c3account}]}}
 
         ticket = json.dumps(data)
         print(ticket)
