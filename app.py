@@ -8,10 +8,7 @@ from bottle import route, template, run, static_file, request, response
 
 @route('/create_ticket', method=['GET', 'POST'])
 def handle_form():
-    if 'verified_email' in request.cookies:
-        ask_email = False
-    else:
-        ask_email = True
+    ask_email = True
     status = ''
 
     if request.POST:
@@ -25,19 +22,30 @@ def handle_form():
         attachmentdata = request.forms.get('hiddendata')
         attachmentname = request.forms.get('hiddenname')
         attachmentsize = request.forms.get('hiddensize')
-        if 'verified_email' in request.cookies:
-            email = request.get_cookie('verified_email')
-        else:
-            email = request.forms.get('email')
+        api_token = 'FOV7zAS4ZIGylDLyqr4LbA56VNXgB9FFIU5hXkXF'
+        #if 'verified_email' in request.cookies:
+            #email = request.get_cookie('verified_email')
+        #else:
+        email = request.forms.get('email')
+        if email:
+            email_name = email.split("@")[0].replace("_", " ")
         # Package the data for the API
         upload = ''
+
+        if email:
+            user = 'eholden@conviva.com/token'
+            data = {"user": {"name": email_name, "email": email}}
+            payload = json.dumps(data)
+            headers = {'Accept':'application/json', 'Content-Type':'application/json'}
+
+            response = requests.post('https://convivasupport.zendesk.com/api/v2/users.json', data=payload, auth=(user, api_token), headers=headers)
+            print(vars(response))
 
         if attachmentdata:
             # Make the API request
             data = {'attachment': {'content_type': attachmenttype, 'file_name': attachmentname, 'size': attachmentsize}}
             ticket = json.dumps(data)
             user = email + '/token'
-            api_token = 'FOV7zAS4ZIGylDLyqr4LbA56VNXgB9FFIU5hXkXF'
             url = 'https://convivasupport.zendesk.com/api/v2/uploads.json?filename=' + attachmentname
             headers = {'content-type': 'application/binary', 'Accept': '*'}
 
@@ -58,10 +66,10 @@ def handle_form():
         ticket = json.dumps(data)
         print(ticket)
         user = email + '/token'
-        api_token = 'FOV7zAS4ZIGylDLyqr4LbA56VNXgB9FFIU5hXkXF'
         url = 'https://convivasupport.zendesk.com/api/v2/requests.json'
         headers = {'content-type': 'application/json'}
         r = requests.post(url, data=ticket, auth=(user, api_token), headers=headers)
+        print(r.status_code)
         if r.status_code != 201:
             if r.status_code == 401 or 422:
                 status = 'Could not authenticate you. Check your email address or register.'
