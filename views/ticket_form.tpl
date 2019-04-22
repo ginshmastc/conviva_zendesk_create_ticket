@@ -98,6 +98,17 @@
 <script type="text/javascript">
 
     window.addEventListener("load", function() {
+	var url = window.location.href;
+	var params = url.split('?')[1];
+	var get_params = [];
+	for(var i = 0; i < params.split('&').length; i++) {
+      var param = url.split('?')[1].split('&')[i];
+	  get_params[param.split('=')[0]] = param.split('=')[1];
+	}
+	
+	console.log(get_params['customer_id']);
+	console.log(get_params['email']);
+	document.getElementById('c3account').value = get_params['customer_id'] ? get_params['customer_id'] : 'c3.conviva';
 	  var c3 = document.getElementById('c3account').value;
 	  if(c3)
 	    document.getElementById('spantitle').innerHTML = 'Support Form for ' + c3;
